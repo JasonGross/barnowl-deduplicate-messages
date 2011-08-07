@@ -1,0 +1,23 @@
+The DeduplicateMessages module provides the ability to delete duplicate
+messages as they arrive.  You may set the `duplicate-message-delay' variable to
+determine how far apart, in seconds, duplicate messages must be before they're
+ignored.  Setting this variable to a negative value will NOT prevent all
+duplicate messages; at present it would be unwieldy to keep a cache of all
+existant messages in perl, and check them against the current message.  You may
+set the `duplicate-message-format' to any of the following values:
+
+ * keep-first           Keep the first of a set of duplicate messages.
+ * keep-first-and-last  Keep the first and last of a set of duplicate messages.
+ * keep-last            Keep the last of a set of duplicate messages.
+ * keep-all             Do not delete duplicate messages.  This is the default.
+
+You must be using BarnOwl version 1.8 or later for this to module to work.
+
+To use DeduplicateMessages, copy DedupliacteMessages.par into ~/.owl/modules.
+
+Then, from BarnOwl, execute the ':reload-module DeduplicateMessages' command.
+You may need to press 'o' twice to redraw existing messages.
+
+
+Technical notes:
+ * Duplicate messages still get logged, if you have logging turned on.
