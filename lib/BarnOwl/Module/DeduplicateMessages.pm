@@ -34,7 +34,7 @@ particular message before a duplicate of that message can be displayed.
 BarnOwl::new_variable_int('duplicate-message-delay',
     {
         default => 0,
-        summary => 'Minimum duration, in seconds, between duplicate messages'
+        summary => 'Minimum duration, in minutes, between duplicate messages'
     });
 
 =head2 clear_message_cache TIME
@@ -117,15 +117,15 @@ sub on_receive_message {
             if (are_messages_equal($m, $old_m)) {
                 if ($format eq 'keep-first') {
                     $m->delete_and_expunge;
-                    push @$message_cache{$time}, $old_m;
+                    push @{$message_cache{$time}}, $old_m;
                 } elsif ($format eq 'keep-last') {
                     $old_m->delete_and_expunge;
                     undef $old_m;
-                    push @$message_cache{$time}, $m;
+                    push @{$message_cache{$time}}, $m;
                 } elsif ($format eq 'keep-fist-and-last') {
                     $old_m->delete_and_expunge unless $old_m->{"__deduplicate_messages_first"};
                     undef $old_m;
-                    push @$message_cache{$time}, $m;
+                    push @{$message_cache{$time}}, $m;
                 } else {
                     die "Invalid setting `$format' for variable duplicate-message-format.\n";
                 }
@@ -134,7 +134,7 @@ sub on_receive_message {
         }
     }
     $m->{"__deduplicate_messages_first"} = 1; # XXX Hack
-    push @$message_cache{$time}, $m;
+    push @{$message_cache{$time}}, $m;
 }
 
 my @methods = qw(type direction body sender recipient login is_private is_login
