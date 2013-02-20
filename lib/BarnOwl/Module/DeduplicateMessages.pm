@@ -60,7 +60,7 @@ $new_variable_enum->('duplicate-message-format',
     {
         default        => 'keep-all',
         summary        => 'Which messages to keep on deduplication.',
-        valid_settings => [qw(keep-first keep-first-and-last keep-last keep-all)],
+        validsettings  => [qw(keep-first keep-first-and-last keep-last keep-all)],
         description    => "Controls the which messages to keep on deduplication:\n\n"
                         . " keep-first           Keep the first of a set of duplicate messages.\n"
                         . " keep-first-and-last  Keep the first and last of a set of duplicate messages.\n"
